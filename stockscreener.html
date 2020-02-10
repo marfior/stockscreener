@@ -1,0 +1,52 @@
+<html>
+<style>
+	.stock-div {
+		padding-bottom: 20px;
+		float: left;
+	}
+	
+	.stock-title {
+	  font-weight: bold;
+		}
+	</style>
+	
+<script type="text/javascript">
+	function searchStocks()
+	{
+		var url = 'https://www.investing.com/stock-screener/Service/SearchStocks';
+		var xhr = new XMLHttpRequest();		
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+		
+		xhr.send(JSON.stringify({
+			country : '22'
+			,sector: '6'
+			,industry: '8'
+			,equityType: 'ORD,DRC,Preferred,Unit,ClosedEnd,REIT,ELKS,OpenEnd,Right,ParticipationShare,CapitalSecurity,PerpetualCapitalSecurity,GuaranteeCertificate,IGC,Warrant,SeniorNote,Debenture,ETF,ADR,ETC,ETN'
+			,pn: '2'
+		}));
+		
+		
+		xhr.onreadystatechange = function () {
+			if (this.readyState != 4) return;
+
+			if (this.status == 200) {
+				var data = JSON.parse(this.responseText);
+				// we get the returned data
+			}
+			
+			document.getElementById('stocks').innerHTML = data;
+
+			// end of state change: it can be after some time (async)
+		};
+	}
+		
+</script>	
+
+<body onload="searchStocks()">
+
+	<button type="button" onclick=" alert('sdfds'); searchStocks();" >Search Stocks</button>	
+	<div id="stocks" class="stock-div">
+	</div>
+</body>
+</html>
